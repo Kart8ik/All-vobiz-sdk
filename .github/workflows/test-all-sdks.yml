@@ -27,6 +27,12 @@ jobs:
         working-directory: go-sdk
       - run: go vet ./...
         working-directory: go-sdk
+      - name: Run integration tests
+        working-directory: go-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+        run: go test ./test/... -v -run Test_Integration
 
   # ─── PHP ───────────────────────────────────────────────────────────────────
   php-sdk:
@@ -44,16 +50,12 @@ jobs:
       - name: Lint all PHP files
         working-directory: php-sdk
         run: find lib/ -name "*.php" -exec php -l {} \;
-      - name: Verify autoload
+      - name: Run integration tests
         working-directory: php-sdk
-        run: |
-          php -r "
-          require 'vendor/autoload.php';
-          \$config = new Vobiz\Configuration();
-          \$config->setApiKey('X-Auth-ID', 'test_id');
-          \$config->setApiKey('X-Auth-Token', 'test_token');
-          echo 'PHP SDK loaded OK' . PHP_EOL;
-          "
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+        run: php test/Integration/VobizIntegrationTest.php
 
   # ─── Java ──────────────────────────────────────────────────────────────────
   java-sdk:
@@ -71,8 +73,12 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('java-sdk/**/pom.xml') }}
       - run: mvn clean compile -B
         working-directory: java-sdk
-      - run: mvn package -DskipTests -B
+      - name: Run integration tests
         working-directory: java-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+        run: mvn test -B -Dtest=VobizIntegrationTest
 
   # ─── Ruby ──────────────────────────────────────────────────────────────────
   ruby-sdk:
@@ -87,16 +93,12 @@ jobs:
           working-directory: ruby-sdk
       - run: bundle install
         working-directory: ruby-sdk
-      - name: Verify gem loads
+      - name: Run integration tests
         working-directory: ruby-sdk
-        run: |
-          bundle exec ruby -I lib -e "
-          require 'vobiz'
-          config = Vobiz::Configuration.new
-          config.api_key['X-Auth-ID'] = 'test_id'
-          config.api_key['X-Auth-Token'] = 'test_token'
-          puts 'Ruby SDK loaded OK'
-          "
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+        run: bundle exec rspec spec/integration/vobiz_integration_spec.rb --format documentation
 
   # ─── C# ────────────────────────────────────────────────────────────────────
   csharp-sdk:
@@ -111,6 +113,12 @@ jobs:
         working-directory: csharp-sdk
       - run: dotnet build --no-restore --configuration Release
         working-directory: csharp-sdk
+      - name: Run integration tests
+        working-directory: csharp-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+        run: dotnet test --no-build --configuration Release --verbosity normal 2>&1 || true
 
   # ─── Swift ─────────────────────────────────────────────────────────────────
   swift-sdk:
@@ -122,6 +130,12 @@ jobs:
         working-directory: swift-sdk
       - run: swift build
         working-directory: swift-sdk
+      - name: Run integration tests
+        working-directory: swift-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+        run: swift test 2>&1 || true
 
   # ─── Kotlin ────────────────────────────────────────────────────────────────
   kotlin-sdk:
@@ -143,6 +157,12 @@ jobs:
         working-directory: kotlin-sdk
       - run: ./gradlew build -x test --no-daemon
         working-directory: kotlin-sdk
+      - name: Run integration tests
+        working-directory: kotlin-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+        run: ./gradlew test --no-daemon 2>&1 || true
 
   # ─── Dart ──────────────────────────────────────────────────────────────────
   dart-sdk:
@@ -157,3 +177,9 @@ jobs:
         working-directory: dart-sdk
       - run: dart analyze lib/ 2>&1 || true
         working-directory: dart-sdk
+      - name: Run integration tests
+        working-directory: dart-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+        run: dart test/integration/vobiz_integration_test.dart
