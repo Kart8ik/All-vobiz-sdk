@@ -41,7 +41,7 @@ func Test_vobiz_ConferenceAPIService(t *testing.T) {
 
 		var authId string
 
-		httpRes, err := apiClient.ConferenceAPI.ApiV1AccountAuthIdConferenceDelete_0(context.Background(), authId).Execute()
+		httpRes, err := apiClient.ConferenceAPI.ApiV1AccountAuthIdConferenceDelete_1(context.Background(), authId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -67,7 +67,7 @@ func Test_vobiz_ConferenceAPIService(t *testing.T) {
 
 		var authId string
 
-		httpRes, err := apiClient.ConferenceAPI.ApiV1AccountAuthIdConferenceGet_0(context.Background(), authId).Execute()
+		httpRes, err := apiClient.ConferenceAPI.ApiV1AccountAuthIdConferenceGet_2(context.Background(), authId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)

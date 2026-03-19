@@ -54,7 +54,7 @@ func Test_vobiz_ApplicationAPIService(t *testing.T) {
 
 		var authId string
 
-		httpRes, err := apiClient.ApplicationAPI.ApiV1AccountAuthIdApplicationGet_0(context.Background(), authId).Execute()
+		httpRes, err := apiClient.ApplicationAPI.ApiV1AccountAuthIdApplicationGet_1(context.Background(), authId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -80,7 +80,7 @@ func Test_vobiz_ApplicationAPIService(t *testing.T) {
 
 		var authId string
 
-		httpRes, err := apiClient.ApplicationAPI.ApiV1AccountAuthIdApplicationPost_0(context.Background(), authId).Execute()
+		httpRes, err := apiClient.ApplicationAPI.ApiV1AccountAuthIdApplicationPost_2(context.Background(), authId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)

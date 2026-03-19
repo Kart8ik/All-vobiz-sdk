@@ -29,7 +29,7 @@ jobs:
       - name: Verify gem loads correctly
         working-directory: ruby-sdk
         run: |
-          ruby -I lib -e "
+          bundle exec ruby -I lib -e "
           require 'vobiz'
           config = Vobiz::Configuration.new
           config.api_key['X-Auth-ID'] = 'test_id'
