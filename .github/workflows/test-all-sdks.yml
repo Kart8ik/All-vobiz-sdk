@@ -33,6 +33,15 @@ jobs:
           VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
           VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
         run: go test ./test/... -v -run Test_Integration
+      - name: Run call flow test
+        working-directory: go-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+          VOBIZ_FROM_NUMBER: ${{ secrets.VOBIZ_FROM_NUMBER }}
+          VOBIZ_TO_NUMBER: ${{ secrets.VOBIZ_TO_NUMBER }}
+          VOBIZ_TRANSFER_NUMBER: ${{ secrets.VOBIZ_TRANSFER_NUMBER }}
+        run: go test ./test/... -v -run Test_CallFlow -timeout 120s
 
   # ─── PHP ───────────────────────────────────────────────────────────────────
   php-sdk:
@@ -56,6 +65,15 @@ jobs:
           VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
           VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
         run: php test/Integration/VobizIntegrationTest.php
+      - name: Run call flow test
+        working-directory: php-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+          VOBIZ_FROM_NUMBER: ${{ secrets.VOBIZ_FROM_NUMBER }}
+          VOBIZ_TO_NUMBER: ${{ secrets.VOBIZ_TO_NUMBER }}
+          VOBIZ_TRANSFER_NUMBER: ${{ secrets.VOBIZ_TRANSFER_NUMBER }}
+        run: php test/Integration/CallFlowTest.php
 
   # ─── Java ──────────────────────────────────────────────────────────────────
   java-sdk:
@@ -79,6 +97,15 @@ jobs:
           VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
           VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
         run: mvn test -B -Dtest=VobizIntegrationTest
+      - name: Run call flow test
+        working-directory: java-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+          VOBIZ_FROM_NUMBER: ${{ secrets.VOBIZ_FROM_NUMBER }}
+          VOBIZ_TO_NUMBER: ${{ secrets.VOBIZ_TO_NUMBER }}
+          VOBIZ_TRANSFER_NUMBER: ${{ secrets.VOBIZ_TRANSFER_NUMBER }}
+        run: mvn test -B -Dtest=CallFlowTest
 
   # ─── Ruby ──────────────────────────────────────────────────────────────────
   ruby-sdk:
@@ -99,6 +126,15 @@ jobs:
           VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
           VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
         run: bundle exec rspec spec/integration/vobiz_integration_spec.rb --format documentation
+      - name: Run call flow test
+        working-directory: ruby-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+          VOBIZ_FROM_NUMBER: ${{ secrets.VOBIZ_FROM_NUMBER }}
+          VOBIZ_TO_NUMBER: ${{ secrets.VOBIZ_TO_NUMBER }}
+          VOBIZ_TRANSFER_NUMBER: ${{ secrets.VOBIZ_TRANSFER_NUMBER }}
+        run: bundle exec rspec spec/integration/call_flow_spec.rb --format documentation
 
   # ─── C# ────────────────────────────────────────────────────────────────────
   csharp-sdk:
@@ -163,6 +199,15 @@ jobs:
           VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
           VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
         run: ./gradlew test --no-daemon 2>&1 || true
+      - name: Run call flow test
+        working-directory: kotlin-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+          VOBIZ_FROM_NUMBER: ${{ secrets.VOBIZ_FROM_NUMBER }}
+          VOBIZ_TO_NUMBER: ${{ secrets.VOBIZ_TO_NUMBER }}
+          VOBIZ_TRANSFER_NUMBER: ${{ secrets.VOBIZ_TRANSFER_NUMBER }}
+        run: ./gradlew test --tests "ai.vobiz.integration.CallFlowTest" --no-daemon 2>&1 || true
 
   # ─── Dart ──────────────────────────────────────────────────────────────────
   dart-sdk:
@@ -183,6 +228,15 @@ jobs:
           VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
           VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
         run: dart test/integration/vobiz_integration_test.dart
+      - name: Run call flow test
+        working-directory: dart-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+          VOBIZ_FROM_NUMBER: ${{ secrets.VOBIZ_FROM_NUMBER }}
+          VOBIZ_TO_NUMBER: ${{ secrets.VOBIZ_TO_NUMBER }}
+          VOBIZ_TRANSFER_NUMBER: ${{ secrets.VOBIZ_TRANSFER_NUMBER }}
+        run: dart test/integration/call_flow_test.dart
 
   # ─── Python ────────────────────────────────────────────────────────────────
   python-sdk:
@@ -202,6 +256,15 @@ jobs:
           VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
           VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
         run: pytest test/integration/test_vobiz_integration.py -v
+      - name: Run call flow test
+        working-directory: python-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+          VOBIZ_FROM_NUMBER: ${{ secrets.VOBIZ_FROM_NUMBER }}
+          VOBIZ_TO_NUMBER: ${{ secrets.VOBIZ_TO_NUMBER }}
+          VOBIZ_TRANSFER_NUMBER: ${{ secrets.VOBIZ_TRANSFER_NUMBER }}
+        run: pytest test/integration/test_call_flow.py -v -s
 
   # ─── Node.js / TypeScript ──────────────────────────────────────────────────
   node-sdk:
@@ -224,3 +287,12 @@ jobs:
           VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
           VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
         run: npm run integration
+      - name: Run call flow test
+        working-directory: node-sdk
+        env:
+          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+          VOBIZ_FROM_NUMBER: ${{ secrets.VOBIZ_FROM_NUMBER }}
+          VOBIZ_TO_NUMBER: ${{ secrets.VOBIZ_TO_NUMBER }}
+          VOBIZ_TRANSFER_NUMBER: ${{ secrets.VOBIZ_TRANSFER_NUMBER }}
+        run: npx ts-node test/call_flow.test.ts
