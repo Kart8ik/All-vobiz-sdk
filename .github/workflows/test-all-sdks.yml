@@ -276,7 +276,7 @@ jobs:
         env:
           VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
           VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
-        run: pytest test/integration/test_vobiz_integration.py -v
+        run: pytest tests/integration/test_vobiz_all_operations_integration.py -v
       - name: Run call flow test
         working-directory: python-sdk
         env:
@@ -285,7 +285,7 @@ jobs:
           VOBIZ_FROM_NUMBER: ${{ secrets.VOBIZ_FROM_NUMBER }}
           VOBIZ_TO_NUMBER: ${{ secrets.VOBIZ_TO_NUMBER }}
           VOBIZ_TRANSFER_NUMBER: ${{ secrets.VOBIZ_TRANSFER_NUMBER }}
-        run: pytest test/integration/test_call_flow.py -v -s
+        run: pytest tests/integration/test_vobiz_all_operations_integration.py -v -k "test_calls_create or test_calls_get_and_actions" -s
 
   # ─── Node.js / TypeScript ──────────────────────────────────────────────────
   node-sdk:
