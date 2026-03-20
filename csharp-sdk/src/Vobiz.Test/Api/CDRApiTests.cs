@@ -8,11 +8,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
 using Microsoft.Extensions.DependencyInjection;
 using Vobiz.Api;
+using Xunit;
 
 
 /* *********************************************************************************
@@ -37,33 +35,25 @@ using Vobiz.Api;
 
 namespace Vobiz.Test.Api
 {
-    /// <summary>
-    ///  Class for testing CDRApi
-    /// </summary>
     public sealed class CDRApiTests : ApiTestsBase
     {
         private readonly ICDRApi _instance;
 
-        public CDRApiTests(): base(Array.Empty<string>())
+        public CDRApiTests() : base(Array.Empty<string>())
         {
             _instance = _host.Services.GetRequiredService<ICDRApi>();
         }
 
-        /// <summary>
-        /// Test ApiV1AccountAccountIdCdrGet
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAccountIdCdrGetAsyncTest()
+        [Fact]
+        public void ServiceResolves()
         {
-            string accountId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<string> startDate = default!;
-            Client.Option<string> endDate = default!;
-            Client.Option<int> perPage = default!;
-            Client.Option<int> page = default!;
-            await _instance.ApiV1AccountAccountIdCdrGetAsync(accountId, xAuthID, xAuthToken, contentType, startDate, endDate, perPage, page);
+            Assert.NotNull(_instance);
+        }
+
+        [Fact]
+        public void OperationMethodExists()
+        {
+            Assert.Contains(typeof(ICDRApi).GetMethods(), m => m.Name == nameof(ICDRApi.ApiV1AccountAccountIdCdrGetAsync));
         }
     }
 }

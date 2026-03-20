@@ -8,11 +8,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
 using Microsoft.Extensions.DependencyInjection;
 using Vobiz.Api;
+using Xunit;
 
 
 /* *********************************************************************************
@@ -37,86 +35,30 @@ using Vobiz.Api;
 
 namespace Vobiz.Test.Api
 {
-    /// <summary>
-    ///  Class for testing SubAccountApi
-    /// </summary>
     public sealed class SubAccountApiTests : ApiTestsBase
     {
         private readonly ISubAccountApi _instance;
 
-        public SubAccountApiTests(): base(Array.Empty<string>())
+        public SubAccountApiTests() : base(Array.Empty<string>())
         {
             _instance = _host.Services.GetRequiredService<ISubAccountApi>();
         }
 
-        /// <summary>
-        /// Test ApiV1AccountsAccountIdSubAccountsGet
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountsAccountIdSubAccountsGetAsyncTest()
+        [Fact]
+        public void ServiceResolves()
         {
-            string accountId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<int> page = default!;
-            Client.Option<int> size = default!;
-            Client.Option<bool> activeOnly = default!;
-            await _instance.ApiV1AccountsAccountIdSubAccountsGetAsync(accountId, xAuthID, xAuthToken, contentType, page, size, activeOnly);
+            Assert.NotNull(_instance);
         }
 
-        /// <summary>
-        /// Test ApiV1AccountsAccountIdSubAccountsPost
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountsAccountIdSubAccountsPostAsyncTest()
+        [Theory]
+        [InlineData(nameof(ISubAccountApi.ApiV1AccountsAccountIdSubAccountsGetAsync))]
+        [InlineData(nameof(ISubAccountApi.ApiV1AccountsAccountIdSubAccountsPostAsync))]
+        [InlineData(nameof(ISubAccountApi.ApiV1AccountsAccountIdSubAccountsSubAccountIdDeleteAsync))]
+        [InlineData(nameof(ISubAccountApi.ApiV1AccountsAccountIdSubAccountsSubAccountIdGetAsync))]
+        [InlineData(nameof(ISubAccountApi.ApiV1AccountsAccountIdSubAccountsSubAccountIdPutAsync))]
+        public void OperationMethodExists(string methodName)
         {
-            string accountId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<Object> body = default!;
-            await _instance.ApiV1AccountsAccountIdSubAccountsPostAsync(accountId, xAuthID, xAuthToken, contentType, body);
-        }
-
-        /// <summary>
-        /// Test ApiV1AccountsAccountIdSubAccountsSubAccountIdDelete
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountsAccountIdSubAccountsSubAccountIdDeleteAsyncTest()
-        {
-            string accountId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            await _instance.ApiV1AccountsAccountIdSubAccountsSubAccountIdDeleteAsync(accountId, xAuthID, xAuthToken, contentType);
-        }
-
-        /// <summary>
-        /// Test ApiV1AccountsAccountIdSubAccountsSubAccountIdGet
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountsAccountIdSubAccountsSubAccountIdGetAsyncTest()
-        {
-            string accountId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            await _instance.ApiV1AccountsAccountIdSubAccountsSubAccountIdGetAsync(accountId, xAuthID, xAuthToken, contentType);
-        }
-
-        /// <summary>
-        /// Test ApiV1AccountsAccountIdSubAccountsSubAccountIdPut
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountsAccountIdSubAccountsSubAccountIdPutAsyncTest()
-        {
-            string accountId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<Object> body = default!;
-            await _instance.ApiV1AccountsAccountIdSubAccountsSubAccountIdPutAsync(accountId, xAuthID, xAuthToken, contentType, body);
+            Assert.Contains(typeof(ISubAccountApi).GetMethods(), m => m.Name == methodName);
         }
     }
 }

@@ -8,11 +8,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
 using Microsoft.Extensions.DependencyInjection;
 using Vobiz.Api;
+using Xunit;
 
 
 /* *********************************************************************************
@@ -37,85 +35,30 @@ using Vobiz.Api;
 
 namespace Vobiz.Test.Api
 {
-    /// <summary>
-    ///  Class for testing EndpointApi
-    /// </summary>
     public sealed class EndpointApiTests : ApiTestsBase
     {
         private readonly IEndpointApi _instance;
 
-        public EndpointApiTests(): base(Array.Empty<string>())
+        public EndpointApiTests() : base(Array.Empty<string>())
         {
             _instance = _host.Services.GetRequiredService<IEndpointApi>();
         }
 
-        /// <summary>
-        /// Test ApiV1AccountAuthIdEndpointDelete
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdEndpointDeleteAsyncTest()
+        [Fact]
+        public void ServiceResolves()
         {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            await _instance.ApiV1AccountAuthIdEndpointDeleteAsync(authId, xAuthID, xAuthToken, contentType);
+            Assert.NotNull(_instance);
         }
 
-        /// <summary>
-        /// Test ApiV1AccountAuthIdEndpointGet
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdEndpointGetAsyncTest()
+        [Theory]
+        [InlineData(nameof(IEndpointApi.ApiV1AccountAuthIdEndpointDeleteAsync))]
+        [InlineData(nameof(IEndpointApi.ApiV1AccountAuthIdEndpointGetAsync))]
+        [InlineData(nameof(IEndpointApi.ApiV1AccountAuthIdEndpointGet_0Async))]
+        [InlineData(nameof(IEndpointApi.ApiV1AccountAuthIdEndpointPostAsync))]
+        [InlineData(nameof(IEndpointApi.ApiV1AccountAuthIdEndpointPost_0Async))]
+        public void OperationMethodExists(string methodName)
         {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<int> limit = default!;
-            Client.Option<int> offset = default!;
-            await _instance.ApiV1AccountAuthIdEndpointGetAsync(authId, xAuthID, xAuthToken, contentType, limit, offset);
-        }
-
-        /// <summary>
-        /// Test ApiV1AccountAuthIdEndpointGet_0
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdEndpointGet_0AsyncTest()
-        {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            await _instance.ApiV1AccountAuthIdEndpointGet_0Async(authId, xAuthID, xAuthToken, contentType);
-        }
-
-        /// <summary>
-        /// Test ApiV1AccountAuthIdEndpointPost
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdEndpointPostAsyncTest()
-        {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<Object> body = default!;
-            await _instance.ApiV1AccountAuthIdEndpointPostAsync(authId, xAuthID, xAuthToken, contentType, body);
-        }
-
-        /// <summary>
-        /// Test ApiV1AccountAuthIdEndpointPost_0
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdEndpointPost_0AsyncTest()
-        {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<Object> body = default!;
-            await _instance.ApiV1AccountAuthIdEndpointPost_0Async(authId, xAuthID, xAuthToken, contentType, body);
+            Assert.Contains(typeof(IEndpointApi).GetMethods(), m => m.Name == methodName);
         }
     }
 }

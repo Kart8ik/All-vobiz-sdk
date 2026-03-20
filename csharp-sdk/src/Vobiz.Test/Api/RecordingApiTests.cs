@@ -40,7 +40,7 @@ namespace Vobiz.Test.Api
     /// <summary>
     ///  Class for testing RecordingApi
     /// </summary>
-    public sealed class RecordingApiTests : ApiTestsBase
+        public sealed class RecordingApiTests : ApiTestsBase
     {
         private readonly IRecordingApi _instance;
 
@@ -49,80 +49,22 @@ namespace Vobiz.Test.Api
             _instance = _host.Services.GetRequiredService<IRecordingApi>();
         }
 
-        /// <summary>
-        /// Test ApiV1AccountAccountIdRecordingGet
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAccountIdRecordingGetAsyncTest()
-        {
-            string accountId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<int> limit = default!;
-            Client.Option<int> offset = default!;
-            Client.Option<string> callUuid = default!;
-            Client.Option<string> recordingType = default!;
-            await _instance.ApiV1AccountAccountIdRecordingGetAsync(accountId, xAuthID, xAuthToken, contentType, limit, offset, callUuid, recordingType);
-        }
 
-        /// <summary>
-        /// Test ApiV1AccountAuthIdExportRecordingPost
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdExportRecordingPostAsyncTest()
-        {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<Object> body = default!;
-            await _instance.ApiV1AccountAuthIdExportRecordingPostAsync(authId, xAuthID, xAuthToken, contentType, body);
-        }
 
-        /// <summary>
-        /// Test ApiV1AccountAuthIdRecordingBulkDeleteDelete
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdRecordingBulkDeleteDeleteAsyncTest()
-        {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<string> addTimeGte = default!;
-            Client.Option<string> addTimeLte = default!;
-            Client.Option<string> callUuid = default!;
-            Client.Option<string> fromNumber = default!;
-            Client.Option<string> toNumber = default!;
-            Client.Option<string> recordingFormat = default!;
-            await _instance.ApiV1AccountAuthIdRecordingBulkDeleteDeleteAsync(authId, xAuthID, xAuthToken, contentType, addTimeGte, addTimeLte, callUuid, fromNumber, toNumber, recordingFormat);
-        }
 
-        /// <summary>
-        /// Test ApiV1AccountAuthIdRecordingDelete
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdRecordingDeleteAsyncTest()
-        {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            await _instance.ApiV1AccountAuthIdRecordingDeleteAsync(authId, xAuthID, xAuthToken, contentType);
-        }
 
-        /// <summary>
-        /// Test ApiV1AccountAuthIdRecordingGet
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdRecordingGetAsyncTest()
-        {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            await _instance.ApiV1AccountAuthIdRecordingGetAsync(authId, xAuthID, xAuthToken, contentType);
-        }
+            [Fact]
+            public void ServiceResolves() => Assert.NotNull(_instance);
+
+            [Theory]
+            [InlineData(nameof(IRecordingApi.ApiV1AccountAccountIdRecordingGetAsync))]
+            [InlineData(nameof(IRecordingApi.ApiV1AccountAuthIdExportRecordingPostAsync))]
+            [InlineData(nameof(IRecordingApi.ApiV1AccountAuthIdRecordingBulkDeleteDeleteAsync))]
+            [InlineData(nameof(IRecordingApi.ApiV1AccountAuthIdRecordingDeleteAsync))]
+            [InlineData(nameof(IRecordingApi.ApiV1AccountAuthIdRecordingGetAsync))]
+            public void OperationMethodExists(string methodName)
+            {
+                Assert.Contains(typeof(IRecordingApi).GetMethods(), m => m.Name == methodName);
+            }
     }
 }

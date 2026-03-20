@@ -52,12 +52,12 @@ namespace Vobiz.Test.Api
         public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
             .ConfigureApi((context, services, options) =>
             {
-                string apiKeyTokenValue1 = context.Configuration["<token>"] ?? throw new Exception("Token not found.");
-                ApiKeyToken apiKeyToken1 = new(apiKeyTokenValue1, ClientUtils.ApiKeyHeader.X_Auth_ID, timeout: TimeSpan.FromSeconds(1));
+                string apiKeyTokenValue1 = Environment.GetEnvironmentVariable("VOBIZ_AUTH_ID") ?? "test-auth-id";
+                ApiKeyToken apiKeyToken1 = new(apiKeyTokenValue1, ClientUtils.ApiKeyHeader.X_Auth_ID, prefix: "", timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(apiKeyToken1);
 
-                string apiKeyTokenValue2 = context.Configuration["<token>"] ?? throw new Exception("Token not found.");
-                ApiKeyToken apiKeyToken2 = new(apiKeyTokenValue2, ClientUtils.ApiKeyHeader.X_Auth_Token, timeout: TimeSpan.FromSeconds(1));
+                string apiKeyTokenValue2 = Environment.GetEnvironmentVariable("VOBIZ_AUTH_TOKEN") ?? "test-auth-token";
+                ApiKeyToken apiKeyToken2 = new(apiKeyTokenValue2, ClientUtils.ApiKeyHeader.X_Auth_Token, prefix: "", timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(apiKeyToken2);
             });
     }

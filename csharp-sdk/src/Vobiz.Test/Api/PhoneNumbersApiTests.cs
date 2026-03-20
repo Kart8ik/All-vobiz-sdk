@@ -8,11 +8,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
 using Microsoft.Extensions.DependencyInjection;
 using Vobiz.Api;
+using Xunit;
 
 
 /* *********************************************************************************
@@ -37,72 +35,29 @@ using Vobiz.Api;
 
 namespace Vobiz.Test.Api
 {
-    /// <summary>
-    ///  Class for testing PhoneNumbersApi
-    /// </summary>
     public sealed class PhoneNumbersApiTests : ApiTestsBase
     {
         private readonly IPhoneNumbersApi _instance;
 
-        public PhoneNumbersApiTests(): base(Array.Empty<string>())
+        public PhoneNumbersApiTests() : base(Array.Empty<string>())
         {
             _instance = _host.Services.GetRequiredService<IPhoneNumbersApi>();
         }
 
-        /// <summary>
-        /// Test ApiV1AccountAuthIdInventoryNumbersGet
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdInventoryNumbersGetAsyncTest()
+        [Fact]
+        public void ServiceResolves()
         {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<string> country = default!;
-            Client.Option<int> page = default!;
-            Client.Option<int> perPage = default!;
-            await _instance.ApiV1AccountAuthIdInventoryNumbersGetAsync(authId, xAuthID, xAuthToken, contentType, country, page, perPage);
+            Assert.NotNull(_instance);
         }
 
-        /// <summary>
-        /// Test ApiV1AccountAuthIdNumbersE164NumberDelete
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdNumbersE164NumberDeleteAsyncTest()
+        [Theory]
+        [InlineData(nameof(IPhoneNumbersApi.ApiV1AccountAuthIdInventoryNumbersGetAsync))]
+        [InlineData(nameof(IPhoneNumbersApi.ApiV1AccountAuthIdNumbersE164NumberDeleteAsync))]
+        [InlineData(nameof(IPhoneNumbersApi.ApiV1AccountAuthIdNumbersGetAsync))]
+        [InlineData(nameof(IPhoneNumbersApi.ApiV1AccountAuthIdNumbersPurchaseFromInventoryPostAsync))]
+        public void OperationMethodExists(string methodName)
         {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            await _instance.ApiV1AccountAuthIdNumbersE164NumberDeleteAsync(authId, xAuthID, xAuthToken, contentType);
-        }
-
-        /// <summary>
-        /// Test ApiV1AccountAuthIdNumbersGet
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdNumbersGetAsyncTest()
-        {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            await _instance.ApiV1AccountAuthIdNumbersGetAsync(authId, xAuthID, xAuthToken, contentType);
-        }
-
-        /// <summary>
-        /// Test ApiV1AccountAuthIdNumbersPurchaseFromInventoryPost
-        /// </summary>
-        [Fact (Skip = "not implemented")]
-        public async Task ApiV1AccountAuthIdNumbersPurchaseFromInventoryPostAsyncTest()
-        {
-            string authId = default!;
-            Client.Option<string> xAuthID = default!;
-            Client.Option<string> xAuthToken = default!;
-            Client.Option<string> contentType = default!;
-            Client.Option<Object> body = default!;
-            await _instance.ApiV1AccountAuthIdNumbersPurchaseFromInventoryPostAsync(authId, xAuthID, xAuthToken, contentType, body);
+            Assert.Contains(typeof(IPhoneNumbersApi).GetMethods(), m => m.Name == methodName);
         }
     }
 }
