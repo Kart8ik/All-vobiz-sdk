@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Vobiz API
   description: >-
-    Complete Vobiz API collection covering all endpoints: Calls, Conferences,
+    Complete Vobiz API collection covering all Endpoints: Calls, Conferences,
     Recordings, Account, Phone Numbers, Applications, Endpoints, Trunks,
     Sub-Accounts, and CDR.
 
