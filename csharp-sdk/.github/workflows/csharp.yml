@@ -1,49 +1,58 @@
-name: Test C# SDK
+name: Vobiz C# SDK CI
 
 on:
   push:
-    paths:
-      - 'csharp-sdk/**'
-      - '.github/workflows/test-csharp-sdk.yml'
   pull_request:
-    paths:
-      - 'csharp-sdk/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  test:
+  unit-tests:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up .NET 8
+      - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        working-directory: csharp-sdk
         run: dotnet restore
 
       - name: Build SDK
-        working-directory: csharp-sdk
         run: dotnet build --no-restore --configuration Release
 
-      - name: Run tests
-        working-directory: csharp-sdk
+      - name: Run unit tests
         run: dotnet test --no-build --configuration Release --verbosity normal
 
-      - name: Build integration test runner
-        working-directory: csharp-sdk
+  integration-call-flow:
+    runs-on: ubuntu-latest
+    env:
+      VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
+      VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
+      VOBIZ_FROM_NUMBER: ${{ secrets.VOBIZ_FROM_NUMBER }}
+      VOBIZ_TO_NUMBER: ${{ secrets.VOBIZ_TO_NUMBER }}
+      VOBIZ_TRANSFER_NUMBER: ${{ secrets.VOBIZ_TRANSFER_NUMBER }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build integration runner
         run: dotnet build src/Vobiz.IntegrationTests/Vobiz.IntegrationTests.csproj --configuration Release
 
       - name: Run integration call flow
-        working-directory: csharp-sdk
-        env:
-          VOBIZ_AUTH_ID: ${{ secrets.VOBIZ_AUTH_ID }}
-          VOBIZ_AUTH_TOKEN: ${{ secrets.VOBIZ_AUTH_TOKEN }}
-          VOBIZ_FROM_NUMBER: ${{ secrets.VOBIZ_FROM_NUMBER }}
-          VOBIZ_TO_NUMBER: ${{ secrets.VOBIZ_TO_NUMBER }}
-          VOBIZ_TRANSFER_NUMBER: ${{ secrets.VOBIZ_TRANSFER_NUMBER }}
         run: |
           if [ -z "$VOBIZ_AUTH_ID" ] || [ -z "$VOBIZ_AUTH_TOKEN" ] || [ -z "$VOBIZ_FROM_NUMBER" ] || [ -z "$VOBIZ_TO_NUMBER" ]; then
             echo "Skipping C# integration call flow: required VOBIZ_* secrets are not set."
